@@ -7,20 +7,21 @@ export const Card = ({ charactes }) => {
       {useMemo(() => {
         return charactes.map((character) => {
           return (
-            <ConteinerCard key={character.id}>
-              <h4>{character.name}</h4>
-
+            <ConteinerCard>
+              <h5>{character.name}</h5>
               <Flip>
                 <div className="front">
                   <img src={character.img} alt={character.alt} />
                 </div>
                 <div className="back">
-                  <p>Occupation: {[...character.occupation]}</p>
-                  <p>Appearance: {[...character.appearance]}</p>
-                  <p>Birthday: {character.birthday}</p>
-                  <p>Status: {character.status}</p>
-                  <p>Nickname: {character.nickname}</p>
-                  <p>Portrayed: {character.portrayed}</p>
+                  <Content>
+                    <p>Occupation: <span>{[...character.occupation]}</span></p>
+                    <p>Appearance: <span>{[...character.appearance]}</span></p>
+                    <p>Birthday: <span>{character.birthday}</span></p>
+                    <p>Status: <span>{character.status}</span></p>
+                    <p>Nickname: <span>{character.nickname}</span></p>
+                    <p>Portrayed: <span>{character.portrayed}</span></p>
+                  </Content>
                 </div>
               </Flip>
             </ConteinerCard>
@@ -32,16 +33,16 @@ export const Card = ({ charactes }) => {
 };
 
 const ConteinerCard = styled.div`
-  h4 {
+  h5 {
     padding: 10px 0;
-    color: #6b8e23;
+    color: #7ffc00;
   }
 `;
 
 const Flip = styled.div`
   position: relative;
   img {
-    width: 100%;
+    width: 220px;
     height: 300px;
     border-radius: 10px;
     object-fit: cover;
@@ -57,7 +58,7 @@ const Flip = styled.div`
   }
   .back {
     position: absolute;
-    padding: 10px;
+    padding: 10px 40px;
     opacity: 0;
     top: 0px;
     left: 0px;
@@ -73,6 +74,28 @@ const Flip = styled.div`
     .back {
       opacity: 1;
       transform: rotateY(0deg);
+    }
+  }
+  @media screen and (min-width: 1200px) {
+    .back {
+      padding: 10px 20px ;
+    }
+  }
+`;
+
+const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  gap: 10px;
+  
+  p{
+    font-weight: 700;
+    span{
+      color: #7ffc00;
+      font-weight: 500;
+      font-size: .9rem;
     }
   }
 `;

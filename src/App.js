@@ -19,7 +19,6 @@ function App() {
   return (
     <>
       <Logo />
-     
       <Container>
         <HomePage charactes={charactes} />
       </Container>
