@@ -17,7 +17,7 @@ export const HomePageDetails = () => {
       setCharacter(...data);
       setIsloading(false);
     });
-  }, []);
+  }, [id]);
 
   if (isLoading) {
     return <Loading/>;
