@@ -1,11 +1,21 @@
 import { useMemo } from "react";
 import styled from "styled-components";
 
-export const Card = ({ charactes }) => {
+export const Card = ({ character }) => {
   return (
     <>
+      {character.length === 0 && (
+        <ContainerLoading>
+          <Loading>
+            <div></div>
+            <div></div>
+            <div></div>
+            <span>Loading...</span>
+          </Loading>
+        </ContainerLoading>
+      )}
       {useMemo(() => {
-        return charactes.map((character) => {
+        return character.map((character) => {
           return (
             <ConteinerCard>
               <h5>{character.name}</h5>
@@ -15,10 +25,13 @@ export const Card = ({ charactes }) => {
                 </div>
                 <div className="back">
                   <Content>
-                    <p>Occupation: <span>{[...character.occupation]}</span></p>
-                    <p>Appearance: <span>{[...character.appearance]}</span></p>
+                    <p>Occupation: <br /> {character.occupation.map((item) => <span>{item}, <br /></span>)}</p>
+                    <p>Appearance: <br /> <span>{character.appearance.join(', ')}</span></p>
                     <p>Birthday: <span>{character.birthday}</span></p>
-                    <p>Status: <span>{character.status}</span></p>
+                    <p>Status: 
+                      <Dot color={character.status === "Alive" ? "green" : character.status === "Deceased" ? "red" : "gray" }></Dot>
+                      <span>{character.status}</span>
+                    </p>
                     <p>Nickname: <span>{character.nickname}</span></p>
                     <p>Portrayed: <span>{character.portrayed}</span></p>
                   </Content>
@@ -27,10 +40,58 @@ export const Card = ({ charactes }) => {
             </ConteinerCard>
           );
         });
-      }, [charactes])}
+      }, [character])}
     </>
   );
 };
+
+const ContainerLoading = styled.div`
+  margin: 120px auto 300px;
+  
+  @media screen and (min-width: 648px) {
+    grid-column: 1 / span 5;
+  }
+`;
+
+const Loading = styled.div`
+  width: 120px;
+  height: 75px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  span {
+    font-size: 22px;
+    text-transform: uppercase;
+    margin: auto;
+  }
+
+  div {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: lime;
+    animation: bounce 0.5s alternate infinite;
+
+    :nth-child(2) {
+      animation-delay: 0.16s;
+    }
+
+    :nth-child(3) {
+      animation-delay: 0.32s;
+    }
+
+    @keyframes bounce {
+      from {
+        transform: scaleX(1.25);
+      }
+      to {
+        transform: translateY(-50px) scaleX(1);
+      }
+    }
+  }
+`;
 
 const ConteinerCard = styled.div`
   h5 {
@@ -42,8 +103,8 @@ const ConteinerCard = styled.div`
 const Flip = styled.div`
   position: relative;
   img {
-    width: 220px;
-    height: 300px;
+    width: 100%;
+    height: 350px;
     border-radius: 10px;
     object-fit: cover;
   }
@@ -58,7 +119,7 @@ const Flip = styled.div`
   }
   .back {
     position: absolute;
-    padding: 10px 40px;
+    padding: 10px 20px;
     opacity: 0;
     top: 0px;
     left: 0px;
@@ -77,8 +138,8 @@ const Flip = styled.div`
     }
   }
   @media screen and (min-width: 1200px) {
-    .back {
-      padding: 10px 20px ;
+    img{
+      height: 300px;
     }
   }
 `;
@@ -88,7 +149,7 @@ const Content = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 10px;
-  gap: 10px;
+  gap: 20px;
   
   p{
     font-weight: 700;
@@ -98,4 +159,18 @@ const Content = styled.div`
       font-size: .9rem;
     }
   }
+  @media screen and (min-width: 1200px) {
+    gap: 10px;
+  }
+`;
+
+const Dot = styled.span`
+  display: inline-block;
+  border-radius: 50%;
+  height: 10px;
+  width: 10px;
+  margin: 0 5px;
+  background-color: ${(p) => {
+    return p.color;
+  }};
 `;

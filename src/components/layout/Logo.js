@@ -16,10 +16,11 @@ const Container = styled.header`
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 80px;
+  height: 100px;
+  margin-bottom: 20px;
 
   img{
-    width: 80px;
+    width: 100px;
   }
 
   @media screen and (min-width: 648px) {
