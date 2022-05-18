@@ -55,17 +55,21 @@ const List = styled.li`
   width: 100%;
 
   h5 {
+    font-size: 1.2rem;
     padding: 10px 0;
     color: #7ffc00;
   }
-
+  
   img {
     width: 100%;
     border-radius: 10px;
     object-fit: cover;
   }
-
+  
   @media screen and (min-width: 1200px) {
+    h5{
+      font-size: .9rem;
+    }
     img {
       height: 300px;
     }

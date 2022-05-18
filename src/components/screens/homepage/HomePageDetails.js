@@ -3,6 +3,8 @@ import axios from "axios";
 import { NavLink, useParams } from "react-router-dom";
 import styled from "styled-components";
 
+import { GiReturnArrow } from "react-icons/gi"
+
 import { Loading } from "../../layout/Loading";
 
 export const HomePageDetails = () => {
@@ -53,6 +55,8 @@ export const HomePageDetails = () => {
           <p>Nickname: <span>{character.nickname}</span></p>
           <p>Appearance: <span>{character.appearance.join(", ")}</span></p>
           <p>Portrayed: <span>{character.portrayed}</span></p>
+
+          <NavLink to="/"><GiReturnArrow/>Back</NavLink>
         </CardContent>
       </CardContainer>
     </>
@@ -133,6 +137,17 @@ const CardContent = styled.div`
     color: white;
     font-size: 1.1rem;
     font-weight: 500;
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.3rem;
+    margin-top: 20px;
+    color: lime;
   }
 `;
 
