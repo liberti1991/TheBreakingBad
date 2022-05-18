@@ -61,7 +61,6 @@ const List = styled.li`
 
   img {
     width: 100%;
-    height: 350px;
     border-radius: 10px;
     object-fit: cover;
   }
