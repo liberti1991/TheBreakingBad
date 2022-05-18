@@ -16,5 +16,9 @@ const INPUT = styled.input`
   margin-bottom: 20px;
   border: none;
   border-radius: 5px;
-  width: 100%;
+  width: 95%;
+  @media screen and (min-width: 1200px) {
+    width: 100%;
+    
+  }
 `;

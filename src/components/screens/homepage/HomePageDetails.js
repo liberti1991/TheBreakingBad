@@ -1,26 +1,26 @@
 import { useEffect, useState } from "react";
+import axios from "axios";
 import { NavLink, useParams } from "react-router-dom";
 import styled from "styled-components";
+
+import { Loading } from "../../layout/Loading";
 
 export const HomePageDetails = () => {
   const { id } = useParams();
 
   const [character, setCharacter] = useState(null);
+  const [isLoading, setIsloading] = useState(true);
 
   useEffect(() => {
-    const getCharacter = async () => {
-      const res = await fetch("https://www.breakingbadapi.com/api/characters/" + id);
+    axios.get("https://www.breakingbadapi.com/api/characters/" + id).then((response) => {
+      const { data } = response;
+      setCharacter(...data);
+      setIsloading(false);
+    });
+  }, []);
 
-      const character = await res.json();
-
-      setCharacter(...character);
-    };
-
-    getCharacter();
-  }, [id]);
-
-  if (!character) {
-    return <p>Loading...</p>;
+  if (isLoading) {
+    return <Loading/>;
   }
 
   return (
@@ -31,7 +31,9 @@ export const HomePageDetails = () => {
         <p>{character.name}</p>
       </NavContainer>
       <CardContainer>
-        <CardImg><img src={character.img} alt={character.name} /></CardImg>
+        <CardImg>
+          <img src={character.img} alt={character.name} />
+        </CardImg>
         <CardContent>
           <h1>{character.name}</h1>
           <p>Birthday: <span>{character.birthday}</span></p>
@@ -50,8 +52,7 @@ export const HomePageDetails = () => {
           </p>
           <p>Nickname: <span>{character.nickname}</span></p>
           <p>Appearance: <span>{character.appearance.join(", ")}</span></p>
-          <p>Portrayed: <span>{character.portrayed}</span>
-          </p>
+          <p>Portrayed: <span>{character.portrayed}</span></p>
         </CardContent>
       </CardContainer>
     </>
@@ -61,7 +62,7 @@ export const HomePageDetails = () => {
 const NavContainer = styled.nav`
   display: flex;
   align-items: center;
-  background-color: #dcdcdc;
+  background-color: #363636;
   margin: 0 10px;
   padding: 10px 20px;
   border-radius: 10px;
@@ -74,7 +75,7 @@ const NavContainer = styled.nav`
   a,
   span,
   p {
-    color: darkgreen;
+    color: lime;
     font-size: 1.3rem;
     font-weight: 700;
   }
@@ -87,7 +88,7 @@ const NavContainer = styled.nav`
 `;
 
 const CardContainer = styled.section`
-  background-color: DarkGreen;
+  background-color: #363636;
   border-radius: 10px;
   display: grid;
   margin: 20px 10px;
@@ -117,13 +118,13 @@ const CardContent = styled.div`
   gap: 10px;
 
   h1 {
-    color: lightgreen;
+    color: lime;
     margin-bottom: 10px;
     border-bottom: solid 1px;
   }
 
   p {
-    color: PowderBlue;
+    color: green;
     font-size: 1.2rem;
     font-weight: 700;
   }

@@ -1,42 +1,35 @@
+import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { Link, Routes, Route, useParams } from 'react-router-dom';
+import { Link, Route, Routes, useParams } from 'react-router-dom';
 
-export const App = () => <MyRoutes />;
+const url = 'https://www.breakingbadapi.com/api/characters/';
 
-const MyRoutes = () => {
+export const App = () => {
+  const [characters, setCharacters] = useState([]);
+
+  useEffect(() => {
+    axios.get(url).then((response) => {
+      const { data } = response;
+      setCharacters(data);
+    });
+  }, []);
+
   return (
     <Routes>
-      <Route path='/' element={<CharactersList />} />
-      <Route path='/:id' element={<CharacterDetails />} />
+      <Route index element={<CharactersList characters={characters} />} />
+      <Route path=':id' element={<CharacterDetails />} />
+      <Route path='*' element={<p>No Matched Location!</p>} />
     </Routes>
   );
 };
 
-function CharactersList() {
-  const [characters, setCharacters] = useState([]);
-
-  useEffect(() => {
-    const getCharacters = async () => {
-      const res = await fetch('https://www.breakingbadapi.com/api/characters');
-
-      const characters = await res.json();
-
-      const transformedCharacters = characters.map((character) => {
-        return { id: character.char_id, name: character.name };
-      });
-
-      setCharacters(transformedCharacters);
-    };
-
-    getCharacters();
-  }, []);
-
+function CharactersList({ characters }) {
   return (
     <ul>
-      {characters.map(({ id, name }) => {
+      {characters.map(({ char_id, name }) => {
         return (
-          <li key={id}>
-            <Link to={id.toString()}>{name}</Link>
+          <li key={char_id}>
+            <Link to={String(char_id)}>{name}</Link>
           </li>
         );
       })}
@@ -50,22 +43,15 @@ function CharacterDetails() {
   const [character, setCharacter] = useState(null);
 
   useEffect(() => {
-    const getCharacter = async () => {
-      const res = await fetch(
-        'https://www.breakingbadapi.com/api/characters/' + id
-      );
-
-      const character = await res.json();
-
-      setCharacter(...character);
-    };
-
-    getCharacter();
+    axios.get(url + id).then((response) => {
+      const { data } = response;
+      setCharacter(...data);
+    });
   }, []);
 
   if (!character) {
     return <p>Loading...</p>;
   }
 
-  return <div>{character.status}</div>;
+  return <p>{character.status}</p>;
 }

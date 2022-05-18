@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Input } from "../layout/Input";
 import { Loading } from "../layout/Loading";
 
-export const HomePage = ({ characters }) => {
+export const HomePage = ({ characters, isLoading }) => {
   const [search, setSearch] = useState("");
 
   const handleChange = (e) => {
@@ -22,13 +22,15 @@ export const HomePage = ({ characters }) => {
     <>
       <Input onChange={handleChange} value={search} placeholder={"Type your search"} />
       <Container>
-        <Loading characters={characters} />
-        {filteredCharacters.map(({ id, name, img }) => {
+        {isLoading ? <Loading  /> : null}
+        {filteredCharacters.map(({ char_id, name, img }) => {
           return (
-            <List key={id}>
+            <List key={char_id}>
               <li>
                 <h5>{name}</h5>
-                <NavLink to={id.toString()}>
+              </li>
+              <li>
+                <NavLink to={char_id.toString()}>
                   <img src={img} alt={name} />
                 </NavLink>
               </li>

@@ -1,25 +1,23 @@
 import styled from "styled-components";
 
-export const Loading = ({ characters }) => {
+export const Loading = () => {
   return (
-    <>
-      {characters.length === 0 && (
-        <ContainerLoading>
-          <LoadingBols>
-            <div></div>
-            <div></div>
-            <div></div>
-            <span>Loading...</span>
-          </LoadingBols>
-        </ContainerLoading>
-      )}
-    </>
+    <ContainerLoading>
+      <LoadingBols>
+        <div></div>
+        <div></div>
+        <div></div>
+        <span>Loading...</span>
+      </LoadingBols>
+    </ContainerLoading>
   );
 };
 
 const ContainerLoading = styled.div`
-  margin: 120px auto 300px;
-  
+  display: flex;
+  justify-content: center;
+  padding: 50px;
+
   @media screen and (min-width: 648px) {
     grid-column: 1 / span 5;
   }
