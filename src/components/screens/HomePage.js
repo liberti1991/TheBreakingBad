@@ -63,6 +63,7 @@ const List = styled.li`
     width: 100%;
     border-radius: 10px;
     object-fit: cover;
+    height: 400px;
   }
 
   @media screen and (min-width: 1200px) {
