@@ -1,28 +1,21 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
 import { NavLink, useParams } from "react-router-dom";
 import styled from "styled-components";
 
-import { GiReturnArrow } from "react-icons/gi"
-
 import { Loading } from "../../layout/Loading";
+import { useAxios } from "../../hooks/useAxios";
+
+import { GiReturnArrow } from "react-icons/gi";
 
 export const HomePageDetails = () => {
   const { id } = useParams();
-
-  const [character, setCharacter] = useState(null);
-  const [isLoading, setIsloading] = useState(true);
-
-  useEffect(() => {
-    axios.get("https://www.breakingbadapi.com/api/characters/" + id).then((response) => {
-      const { data } = response;
-      setCharacter(...data);
-      setIsloading(false);
-    });
-  }, [id]);
+  const { character, isLoading } = useAxios(id);
 
   if (isLoading) {
-    return <Loading/>;
+    return <Loading />;
+  }
+
+  if (!character) {
+    return <p>Character does not exist</p>;
   }
 
   return (
@@ -38,7 +31,9 @@ export const HomePageDetails = () => {
         </CardImg>
         <CardContent>
           <h1>{character.name}</h1>
-          <p>Birthday: <span>{character.birthday}</span></p>
+          <p>
+            Birthday: <span>{character.birthday}</span>
+          </p>
           <p>
             Occupation:{" "}
             {character.occupation.map((occupation) => (
@@ -52,11 +47,19 @@ export const HomePageDetails = () => {
             <Dot color={character.status === "Alive" ? "green" : character.status === "Deceased" ? "red" : "gray"}></Dot>
             <span>{character.status}</span>
           </p>
-          <p>Nickname: <span>{character.nickname}</span></p>
-          <p>Appearance: <span>{character.appearance.join(", ")}</span></p>
-          <p>Portrayed: <span>{character.portrayed}</span></p>
-
-          <NavLink to="/"><GiReturnArrow/>Back</NavLink>
+          <p>
+            Nickname: <span>{character.nickname}</span>
+          </p>
+          <p>
+            Appearance: <span>{character.appearance.join(", ")}</span>
+          </p>
+          <p>
+            Portrayed: <span>{character.portrayed}</span>
+          </p>
+          <NavLink to="/">
+            <GiReturnArrow />
+            Back
+          </NavLink>
         </CardContent>
       </CardContainer>
     </>

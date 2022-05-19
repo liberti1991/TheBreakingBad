@@ -2,9 +2,8 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { Input } from "../layout/Input";
-import { Loading } from "../layout/Loading";
 
-export const HomePage = ({ characters, isLoading }) => {
+export const HomePage = ({ characters }) => {
   const [search, setSearch] = useState("");
 
   const handleChange = (e) => {
@@ -22,7 +21,6 @@ export const HomePage = ({ characters, isLoading }) => {
     <>
       <Input onChange={handleChange} value={search} placeholder={"Type your search"} />
       <Container>
-        {isLoading ? <Loading  /> : null}
         {filteredCharacters.map(({ char_id, name, img }) => {
           return (
             <List key={char_id}>
@@ -41,6 +39,7 @@ export const HomePage = ({ characters, isLoading }) => {
     </>
   );
 };
+
 const Container = styled.section`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -70,6 +69,7 @@ const List = styled.li`
     h5{
       font-size: .9rem;
     }
+    
     img {
       height: 300px;
     }

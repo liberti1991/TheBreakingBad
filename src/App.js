@@ -1,31 +1,23 @@
-import axios from 'axios';
-import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { useAxios } from "./components/hooks/useAxios";
+import { Loading } from "./components/layout/Loading";
 
 import { Logo } from "./components/layout/Logo";
 import { MyRoutes } from "./components/myRoutes/MyRoutes";
 
 export const App = () => {
-  const [characters, setCharacters] = useState([]);
-  const [isLoading, setIsloading] = useState(true);
-
-  useEffect(() => {
-    axios.get("https://www.breakingbadapi.com/api/characters/").then((response) => {
-      const { data } = response;
-      setCharacters(data);
-      setIsloading(false);
-    });
-  }, []);
-
-  return (
+  const { characters, isLoading } = useAxios();
+  return isLoading ? (
+    <Loading />
+  ) : (
     <>
       <Logo />
       <Container>
-        <MyRoutes isLoading={isLoading} characters={characters} />
+        <MyRoutes characters={characters} />
       </Container>
     </>
   );
-}
+};
 
 export default App;
 
