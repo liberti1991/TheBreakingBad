@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
+
+import { Button } from "../layout/Button";
 import { Input } from "../layout/Input";
 
-export const HomePage = ({ characters }) => {
+export const HomePage = ({ characters, loadMore, showButton, AllItems }) => {
   const [search, setSearch] = useState("");
 
   const handleChange = (e) => {
@@ -12,8 +14,8 @@ export const HomePage = ({ characters }) => {
   };
 
   const filteredCharacters = !!search
-    ? characters.filter((characters) => {
-        return characters.name.toLowerCase().includes(search.toLowerCase());
+    ? AllItems.filter((AllItems) => {
+        return AllItems.name.toLowerCase().includes(search.toLowerCase());
       })
     : characters;
 
@@ -24,18 +26,13 @@ export const HomePage = ({ characters }) => {
         {filteredCharacters.map(({ char_id, name, img }) => {
           return (
             <List key={char_id}>
-              <li>
-                <h5>{name}</h5>
-              </li>
-              <li>
-                <NavLink to={char_id.toString()}>
-                  <img src={img} alt={name} />
-                </NavLink>
-              </li>
+              <li><h5>{name}</h5></li>
+              <li><NavLink to={char_id.toString()}><img src={img} alt={name} /></NavLink></li>
             </List>
           );
         })}
       </Container>
+      {!search && !showButton ? <Button loadMore={loadMore} text={"Load more characters"} /> : null}
     </>
   );
 };
@@ -58,18 +55,18 @@ const List = styled.li`
     padding: 10px 0;
     color: #7ffc00;
   }
-  
+
   img {
     width: 100%;
     border-radius: 10px;
     object-fit: cover;
   }
-  
+
   @media screen and (min-width: 1200px) {
-    h5{
-      font-size: .9rem;
+    h5 {
+      font-size: 0.9rem;
     }
-    
+
     img {
       height: 300px;
     }

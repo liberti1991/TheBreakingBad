@@ -1,19 +1,22 @@
 import styled from "styled-components";
-import { useAxios } from "./components/hooks/useAxios";
-import { Loading } from "./components/layout/Loading";
 
+import { url } from "./components/hooks/url";
+import { useLoadItems } from "./components/hooks/useLoadItems";
+
+import { Loading } from "./components/layout/Loading";
 import { Logo } from "./components/layout/Logo";
 import { MyRoutes } from "./components/myRoutes/MyRoutes";
 
 export const App = () => {
-  const { characters, isLoading } = useAxios();
+
+  const { items: characters, isLoading, loadMore, showButton, AllItems } = useLoadItems(url, 10);
   return isLoading ? (
     <Loading />
   ) : (
     <>
       <Logo />
       <Container>
-        <MyRoutes characters={characters} />
+        <MyRoutes characters={characters} loadMore={loadMore} showButton={showButton} AllItems={AllItems} />
       </Container>
     </>
   );

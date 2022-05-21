@@ -1,14 +1,7 @@
 import styled from "styled-components";
 
 export const Input = ({ placeholder, onChange, value }) => {
-  return (
-    <INPUT
-      onChange={onChange}
-      value={value}
-      type="search"
-      placeholder={placeholder}
-    />
-  );
+  return <INPUT onChange={onChange} value={value} type="search" placeholder={placeholder} />;
 };
 
 const INPUT = styled.input`
@@ -17,8 +10,8 @@ const INPUT = styled.input`
   border: none;
   border-radius: 5px;
   width: 95%;
+
   @media screen and (min-width: 1200px) {
     width: 100%;
-    
   }
 `;

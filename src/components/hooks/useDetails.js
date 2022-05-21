@@ -1,23 +1,13 @@
 import axios from "axios";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-export const useAxios = (id) => {
-  const [characters, setCharacters] = useState([]);
+export const useDetails = (url) => {
+  const { id } = useParams();
   const [character, setCharacter] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const url = "https://www.breakingbadapi.com/api/characters/";
-
   useEffect(() => {
-    if (!id) {
-      axios.get(url).then((response) => {
-        const { data } = response;
-        setCharacters(data);
-        setIsLoading(false);
-      });
-      return;
-    }
-
     if (!Number(id)) {
       setIsLoading(false);
       return;
@@ -32,7 +22,11 @@ export const useAxios = (id) => {
         }
       })
       .then(() => setIsLoading(false));
-      // eslint-disable-next-line
+    // eslint-disable-next-line
   }, []);
-  return { characters, character, isLoading };
+
+  return {
+    character,
+    isLoading,
+  };
 };
