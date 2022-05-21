@@ -6,9 +6,9 @@ import { useLoadItems } from "./components/hooks/useLoadItems";
 import { Loading } from "./components/layout/Loading";
 import { Logo } from "./components/layout/Logo";
 import { MyRoutes } from "./components/myRoutes/MyRoutes";
+import { Footer } from "./components/layout/Footer";
 
 export const App = () => {
-
   const { items: characters, isLoading, loadMore, showButton, AllItems } = useLoadItems(url, 10);
   return isLoading ? (
     <Loading />
@@ -17,6 +17,7 @@ export const App = () => {
       <Logo />
       <Container>
         <MyRoutes characters={characters} loadMore={loadMore} showButton={showButton} AllItems={AllItems} />
+        <Footer />
       </Container>
     </>
   );
